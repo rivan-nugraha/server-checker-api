@@ -26,7 +26,7 @@ async function bootstrap() {
   await app.register(fastifyMultipart);
 
   app.enableCors();
-  await app.listen(process.env.PORT ?? 3000, () => {
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0', () => {
     console.log(
       `Application Started at port: ${process.env.PORT ?? 3000}, httpsMode: ${httpsMode}`,
     );
