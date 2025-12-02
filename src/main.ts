@@ -19,9 +19,6 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({ https: httpsOptions! }),
-    {
-      cors: true,
-    },
   );
 
   await app.register(fastifyCsrf);
@@ -29,7 +26,11 @@ async function bootstrap() {
   await app.register(fastifyMultipart);
 
   app.enableCors();
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000, () => {
+    console.log(
+      `Application Started at port: ${process.env.PORT ?? 3000}, httpsMode: ${httpsMode}`,
+    );
+  });
 }
 
 function generateHttpsModeOption(httpsMode: boolean): NestApplicationOptions {
